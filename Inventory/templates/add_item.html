@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Item</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        a.back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a.back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Add New Item</h2>
+    <form method="post" action="{% url 'add_item_post' %}">
+        {% csrf_token %}
+        <label for="item">Item Name:</label>
+        <input type="text" id="item" name="item_name" required>
+
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description">
+
+        <label for="expiry">Has Expiry?</label>
+        <select id="expiry" name="expiry" required>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+        </select>
+
+        <label for="entry_number">Has Entry Number?</label>
+        <select id="entry_number" name="entry_number" required>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+        </select>
+
+        <button type="submit">Add Item</button>
+    </form>
+    <a href="{% url 'dashboard' %}" class="back-link">← Back to Dashboard</a>
+</div>
+</body>
+</html>

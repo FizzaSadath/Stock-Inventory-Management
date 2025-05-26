@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Item</title>
+</head>
+<body>
+    <h2>Delete Item</h2>
+    <form method="POST" action="{% url 'delete_item_post' %}">
+        {% csrf_token %}
+        <label for="item">Select Item:</label>
+        <select name="item_id" required>
+            {% for item in items %}
+                <option value="{{ item.id }}">{{ item.item_name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>

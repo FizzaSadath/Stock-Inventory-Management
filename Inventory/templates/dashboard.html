@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard a {
+            display: inline-block;
+            padding: 15px 25px;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .dashboard a:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inventory Management Dashboard</h1>
+    <div class="dashboard">
+        <a href="{% url 'add_item' %}">Add Item</a>
+        <a href="{% url 'delete_item' %}">Delete Item</a>
+        <a href="{% url 'add_stock' %}">Add Stock</a>
+        <a href="{% url 'remove_stock' %}">Remove Stock</a>
+        <a href="{% url 'view_stock' %}">View Stock</a>
+    </div>
+
+    <h2>Stock Forecast</h2>
+
+    {% if forecasts %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Predicted Quantity</th>
+                    <th>Prediction Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for forecast in forecasts %}
+                <tr>
+                    <td>{{ forecast.ITEM.item_name }}</td>
+                    <td>{{ forecast.predicted_quantity }}</td>
+                    <td>{{ forecast.prediction_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No forecast data available.</p>
+    {% endif %}
+</body>
+</html>

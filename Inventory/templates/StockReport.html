@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        label, select, button {
+            font-size: 16px;
+            padding: 8px;
+            margin: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #e6f7ff;
+        }
+
+        .no-records {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Stock Report</h1>
+
+    <form method="get" action="">
+        <label for="search">Select Item:</label>
+        <select name="search" id="search" required>
+            <option value="">-- All Items --</option>
+            {% for item in items %}
+                <option value="{{ item.item_name }}" {% if item.item_name == search_query %}selected{% endif %}>
+                    {{ item.item_name }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Date Added</th>
+                <th>Quantity In</th>
+                <th>Expiry Date</th>
+                <th>Batch Number</th>
+                <th>Date Removed</th>
+                <th>Quantity Out</th>
+                <th>Net Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in combined_data %}
+            <tr>
+                <td>{{ row.item_name }}</td>
+                <td>{{ row.date_added|default:"-" }}</td>
+                <td>{{ row.quantity_in|default:"-" }}</td>
+                <td>{{ row.expiry_date|default:"-" }}</td>
+                <td>{{ row.entry_number|default:"-" }}</td>
+                <td>{{ row.date_removed|default:"-" }}</td>
+                <td>{{ row.quantity_out|default:"-" }}</td>
+                <td>{{ row.net_quantity|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="no-records">No records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<h2>Total Stock Summary</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Total Quantity Available</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item_name, total in stock_summary.items %}
+            <tr>
+                <td>{{ item_name }}</td>
+                <td>{{ total }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="2">No items match the search criteria.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+</body>
+</html>

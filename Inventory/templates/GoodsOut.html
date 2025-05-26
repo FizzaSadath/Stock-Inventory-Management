@@ -1,0 +1,16 @@
+<form method="POST" action="{% url 'remove_stock_post' %}">
+    {% csrf_token %}
+
+    <label for="item">Item:</label>
+    <select name="item_id" id="item" required>
+        <option value="">-- Select Item --</option>
+        {% for item in items %}
+            <option value="{{ item.id }}">{{ item.item_name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="quantity">Quantity to Remove:</label>
+    <input type="number" name="quantity" id="quantity" required min="1"><br><br>
+
+    <button type="submit">Remove Stock</button>
+</form>
